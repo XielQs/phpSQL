@@ -82,10 +82,10 @@ Alabileceği Değerler
 - AI (AUTO_INCREMENT) - Otomatik Artış / boolean
 - unique - Ekstra Olarak (PRIMARY_KEY gibi) / string|null
 - isnull - Boş mu / boolean
-- comment - Açıklana / string|null
+- comment - Açıklama / string|null
 
 ```php
-$phpsql->createTable("tablo_adi",[
+$phpsql->createTable("tablo_adi", [
     [
         "name" => "satir_adi",
         "type" => "varchar"

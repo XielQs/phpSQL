@@ -1,0 +1,33 @@
+{
+	"name": "gamerboytr/phpsql",
+	"description": "A Php Library For MySQL",
+	"keywords": [
+		"sql",
+		"database",
+		"php",
+		"mysql",
+		"mysqli"
+	],
+	"homepage": "https://github.com/gamerboytr/phpsql",
+	"type": "library",
+	"license": "MIT",
+	"require": {
+		"php": ">=7.0"
+	},
+	"authors": [
+		{
+			"name": "GamerboyTR",
+			"email": "offical.gamerboytr@yandex.com",
+			"role": "Founder"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/gamerboytr/phpsql/issues",
+		"source": "https://github.com/gamerboytr/phpsql/"
+	},
+	"autoload": {
+		"files": [
+			"src/phpsql.class.php"
+		]
+	}
+}
