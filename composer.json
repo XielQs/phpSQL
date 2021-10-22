@@ -12,7 +12,7 @@
 	"license": "MIT",
 	"require": {
 		"php": ">=7.0",
-		"composer-runtime-api": "^2.0"
+		"composer-runtime-api": "*"
 	},
 	"require-dev": {
 		"php": ">=7.0"
