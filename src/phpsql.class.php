@@ -2,17 +2,17 @@
 /**!
  * Coder By GamerboyTR (https://github.com/gamerboytr)
  * A Php Library For MySql
- * Version 1.0
+ * Version 1.1
  * License Under MIT
  */
 namespace GamerboyTR;
 use mysqli;
 
 class PhpSql {
-    private $database = null;
-    private $databaseUser = "root";
-    private $databasePassword = "";
-    private $databaseHost = "localhost";
+    protected $database = null;
+    protected $databaseUser = "root";
+    protected $databasePassword = "";
+    protected $databaseHost = "localhost";
 
     function __construct($host = null, $username = null, $password = null) {
         $this->databaseHost = $host ? $host : $this->databaseHost;
@@ -41,7 +41,7 @@ class PhpSql {
      */
     public function getStatus() {
         try {
-            @$mysqli = new mysqli($this->databaseHost, $this->databaseUser, $this->databasePassword);
+            @$mysqli = $this->connect();
             if($mysqli->connect_errno) {
                 return [
                     "success" => 0,
@@ -67,7 +67,7 @@ class PhpSql {
      * @param string $password Mysqli Password
      * @return array Mysqli Status
      */
-    public function setMysqli($host = "", $username = "", $password = "") {
+    public function setMysqli($host, $username, $password) {
         $this->databaseHost = $host ? $host : $this->databaseHost;
         $this->databaseUser = $username ? $username : $this->databaseUser;
         $this->databasePassword = $password ? $password : $this->databasePassword;
@@ -85,7 +85,7 @@ class PhpSql {
             "user" => $this->databaseUser,
             "password" => $this->databasePassword,
             "host" => $this->databaseHost,
-            "active" => $this->getStatus(),
+            "active" => $this->getStatus()['success'],
         ];
     }
     /**
@@ -111,7 +111,7 @@ class PhpSql {
     public function query($query, $fetch = true) {
         if(!$this->database) die("<br>Please Select a Database First !");
         try {
-            @$mysqli = new mysqli($this->databaseHost, $this->databaseUser, $this->databasePassword, $this->database);
+            @$mysqli = $this->connect();
             $myQuery = $mysqli->query($query);
             if(!$myQuery) die("<br>A Mysqli Query Error Occurred : ".$mysqli->error);
             if($fetch) return $myQuery->fetch_assoc();
@@ -155,7 +155,7 @@ class PhpSql {
         ];
     }
     /**
-     * Select Data From Table
+     * Select Row From Table
      * @param string $column Select Column (* = Select All)
      * @param string $extra Extra Selector (e.g. WHERE, ORDER BY)
      * @param string $table Selecting Data Table
@@ -163,10 +163,34 @@ class PhpSql {
      * @return mixed
      */
     public function select($column, $table, $extra = null, $fetch = true) {
-        @$mysqli = new mysqli($this->databaseHost, $this->databaseUser, $this->databasePassword, $this->database);
+        @$mysqli = $this->connect();
         $query = $mysqli->query("SELECT $column FROM $table".($extra ? ' '.$extra : ''));
         if($mysqli->errno || !$query) die("<br>Error Fetching Column : ".$mysqli->error);
         if($fetch) return $query->fetch_assoc();
         else return $query;
+    }
+    /**
+     * Delete Row From Table
+     * @param string $table Name Of The Table
+     * @param string $where Where Condition
+     * @return array
+     */
+    public function delete($table, $where) {
+        $mysqli = $this->connect();
+        $tryingCode = "DELETE FROM `$table` WHERE $where";
+        @$query = $mysqli->query($tryingCode);
+        if(!$mysqli->affected_rows) return [
+            "success" => false,
+            "error" => "No Data Found",
+            "errorType" => "NO_AFFECTED_ROWS",
+            "tryingCode" => $tryingCode,
+        ];
+        if($query || !$mysqli->errno) return ["success" => true];
+        else return [
+            "success" => false,
+            "errorCode" => $mysqli->errno,
+            "error" => $mysqli->error,
+            "tryingCode" => $tryingCode,
+        ];
     }
 }
