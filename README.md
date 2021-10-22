@@ -104,6 +104,43 @@ $phpsql->createTable("tablo_adi", [
 ]);
 ```
 
+## Silme
+
+```php
+$phpsql->delete("tablo_adi", "seçici");
+// Örnek
+$phpsql->delete("kullanicilar", "adi='mehmet'");
+```
+
+## Kütüphane Ayalarını Kaydetme/Yükleme
+
+Dikkat Kaydedilen Ayarı Yükleyeceğiniz Zaman $phpsql Değişkenini Altına Ayarlamayı Unutmayın !
+
+```php
+// Örnek
+$phpsql = new GamerboyTR\PhpSql();
+$phpsql->restoreMysqliConfig();
+```
+
+### Kaydetme
+
+Alabileceği Değerler
+
+- fileSavePath - Dosyayı Kaydedeceği Klasör / string
+- overwriteFile - Klasörde Zaten Kaydedilmiş Dosya Varya Üzerine Yazma / boolean
+
+```php
+$phpsql->saveMysqliConfig([
+    // Değerler Buraya
+]);
+```
+
+### Yükleme
+
+```php
+$phpsql->restoreMysqliConfig("klasor");
+```
+
 ### Yakında Daha Fazla Özellik Eklenicektir
 
 Author : GamerboyTR Mail : offical.gamerboytr@yandex.com Web : <https://www.gamerboytr.ml>

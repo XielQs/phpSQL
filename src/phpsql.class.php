@@ -23,6 +23,69 @@ class PhpSql {
         };
     }
     /**
+     * Save Your Mysqli Configuration
+     * @param array $options Save Options
+     * @return array
+     */
+    public function saveMysqliConfig($options = []) {
+        $options = array_merge([
+            "fileSavePath" => "./",
+            "overwriteFile" => true
+        ], $options);
+        $filePath = $options['fileSavePath']."phpsql.config.json";
+        if(file_exists($filePath) && !$options['overwriteFile']) {
+                return [
+                "success" => false,
+                "error" => "phpSQL Config File Already Exits!"
+            ];
+        }
+        $file = fopen($filePath, "w+") or die("Unable to open file!");
+        $json = json_encode([
+            "database" => [
+                "current" => $this->database,
+                "user" => $this->databaseUser,
+                "password" => $this->databasePassword,
+                "host" => $this->databaseHost
+            ],
+            "date" => date("Y-m-d H:i:s"),
+        ]);
+        if(fwrite($file, $json)) return ["success" => true];
+    }
+    /**
+     * Restore Your Mysqli Configuration
+     * @param string $path Configuration File Path
+     * @return array
+     */
+    public function restoreMysqliConfig($path) {
+        $filePath = $path."phpsql.config.json";
+        if(!file_exists($filePath)) {
+            return [
+                "success" => false,
+                "error" => "File Does Not Exist"
+            ];
+        }
+        $file = file_get_contents($filePath) or die("Unable to open file!");
+        $file = json_decode($file);
+        if(json_last_error() !== JSON_ERROR_NONE) {
+            return [
+                "success" => false,
+                "error" => "Configuration File Corrupt Or Incorrect"
+            ];
+        }
+        try {
+            $this->databaseHost = $file->database->host;
+            $this->databaseUser = $file->database->user;
+            $this->databasePassword = $file->database->password;
+            $this->database = $file->database->current;
+            if($this->getStatus()['success']) return ["success" => true];
+        } catch (\Throwable $th) {
+            return [
+                "success" => false,
+                "error" => $th
+            ];
+        }
+    }
+    /**
      * Connect Mysqli
      * @return object Mysql Variable
      */
@@ -137,7 +200,7 @@ class PhpSql {
                 "unique" => null,
                 "isnull" => false,
                 "comment" => null
-            ],$val);
+            ], $val);
             if(!is_array($val)) die("<br>Props Must Be Array In Array");
             $str .= "`".$val['name']."` ".$val['type']."(".$val['length'].") ".(!$val['isnull'] ? 'NOT NULL ' : '').($val['AI'] ? 'AUTO_INCREMENT' : '').($val['comment'] ? 'COMMENT "'.$val['comment'].'"' : '')." ".$val['unique'].",";
         }
