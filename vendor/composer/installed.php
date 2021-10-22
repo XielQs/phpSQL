@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
+        'pretty_version' => '1.1',
+        'version' => '1.1.0.0',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '6e283414856b424a850e169a470f3a484ccbf859',
+        'reference' => NULL,
         'name' => 'gamerboytr/phpsql',
         'dev' => true,
     ),
     'versions' => array(
         'gamerboytr/phpsql' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
+            'pretty_version' => '1.1',
+            'version' => '1.1.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '6e283414856b424a850e169a470f3a484ccbf859',
+            'reference' => NULL,
             'dev_requirement' => false,
         ),
     ),

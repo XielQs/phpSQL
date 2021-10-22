@@ -1,21 +1,26 @@
 {
 	"name": "gamerboytr/phpsql",
 	"description": "A Php Library For MySQL",
+	"version": "1.1",
 	"keywords": [
 		"sql",
 		"database",
 		"php",
 		"mysql",
-		"mysqli"
+		"mysqli",
+		"gamerboytr",
+		"class",
+		"phpclass"
 	],
 	"type": "library",
 	"license": "MIT",
 	"require": {
-		"php": ">=7.0",
-		"composer-runtime-api": "^1.0"
+		"php": ">=7.2",
+		"composer-runtime-api": "*"
 	},
 	"require-dev": {
-		"php": ">=7.0"
+		"php": ">=7.2",
+		"composer-runtime-api": "*"
 	},
 	"authors": [
 		{
@@ -29,8 +34,8 @@
 		"source": "https://github.com/gamerboytr/phpsql/"
 	},
 	"autoload": {
-		"files": [
-			"src/phpsql.class.php"
-		]
+		"psr-4": {
+			"GamerboyTR\\": "src/"
+		}
 	}
 }

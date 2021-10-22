@@ -4,10 +4,20 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9b233b4111ef1c6e4df4dda47dfb35c2
+class ComposerStaticInitc7af1e3b2c695d403f23c59f35e4aae9
 {
-    public static $files = array (
-        '73292c28e99fcaef297ffcc01b0568dc' => __DIR__ . '/../..' . '/src/phpsql.class.php',
+    public static $prefixLengthsPsr4 = array (
+        'G' => 
+        array (
+            'GamerboyTR\\' => 11,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'GamerboyTR\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
     );
 
     public static $classMap = array (
@@ -17,7 +27,9 @@ class ComposerStaticInit9b233b4111ef1c6e4df4dda47dfb35c2
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInit9b233b4111ef1c6e4df4dda47dfb35c2::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitc7af1e3b2c695d403f23c59f35e4aae9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitc7af1e3b2c695d403f23c59f35e4aae9::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitc7af1e3b2c695d403f23c59f35e4aae9::$classMap;
 
         }, null, ClassLoader::class);
     }
