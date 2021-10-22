@@ -3,14 +3,23 @@
 MySql İçin Bir Php Kütüphanesi
 
 Herhangi Bir Sorun Olursa [Buradan](mailto:offical.gamerboytr@yandex.com) Ulaşabilirsiniz
-Ayrıca Dosyada `Php Doc`'da Kullanılmaktadır, Modern Editörlerde İşinize Yarayabilir (Sıkıştırılmış Dosya İçin Geçerli **Değildir**!)
+Ayrıca Dosyada `Php Doc` Kullanılmaktadır, Modern Editörlerde İşinize Yarayabilir (Sıkıştırılmış Dosya İçin Geçerli **Değildir**!)
 
 ## Kurulum
 
 İlk Önce Dosyamızı Dahil Edelim
 
 ```php
+// Dosya
 require __DIR__."/phpsql.class.php";
+// Composer
+require __DIR__."/vendor/autoload.php";
+```
+
+Composer Kullanıyorsanız Bu Komutu Kullanmayı Unutmayın !
+
+```bat
+composer require gamerboytr/phpsql
 ```
 
 Sınıfımızı Başlatalım
