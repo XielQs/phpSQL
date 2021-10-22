@@ -8,7 +8,6 @@
 		"mysql",
 		"mysqli"
 	],
-	"homepage": "https://github.com/gamerboytr/phpsql",
 	"type": "library",
 	"license": "MIT",
 	"require": {

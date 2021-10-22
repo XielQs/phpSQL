@@ -1,2 +1,3 @@
 tests/*
 .htaccess
+composer.lock
