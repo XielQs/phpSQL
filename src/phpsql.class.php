@@ -2,7 +2,7 @@
 /**!
  * Coder By GamerboyTR (https://github.com/gamerboytr)
  * A Php Library For MySql
- * Version 1.1
+ * Version 1.2
  * License Under MIT
  */
 namespace GamerboyTR;
