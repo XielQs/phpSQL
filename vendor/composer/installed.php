@@ -6,11 +6,11 @@
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'reference' => NULL,
-        'name' => '__root__',
+        'name' => 'gamerboytr/phpsql',
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
+        'gamerboytr/phpsql' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
             'type' => 'library',
