@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-$phpsql = new GamerboyTR\PhpSql();
+$phpsql = new GamerboyTR\phpSQL();
 
-if(!$phpsql->getStatus()) die("PhpSql Not Working !");
+if (!$phpsql->getStatus()) die("phpSQL Not Working !");

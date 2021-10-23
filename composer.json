@@ -30,8 +30,8 @@
 		}
 	],
 	"support": {
-		"issues": "https://github.com/gamerboytr/phpsql/issues",
-		"source": "https://github.com/gamerboytr/phpsql/"
+		"issues": "https://github.com/gamerboytr/phpSQL/issues",
+		"source": "https://github.com/gamerboytr/phpSQL/"
 	},
 	"autoload": {
 		"psr-4": {

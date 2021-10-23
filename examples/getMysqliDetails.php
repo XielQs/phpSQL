@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-$phpsql = new GamerboyTR\PhpSql();
+$phpsql = new GamerboyTR\phpSQL();
 $details = $phpsql->getMysqliDetails();
 ?>
 <p>Mysqli User = <?php echo $details['user'] ?></p>

@@ -27,13 +27,13 @@ composer require gamerboytr/phpsql
 Sınıfımızı Başlatalım
 
 ```php
-$phpsql = new GamerboyTR\PhpSql();
+$phpsql = new GamerboyTR\phpSQL();
 ```
 
 Eğerki MySQL Ayarlarınız(kullanıcı adı, şifre vs.) Farklıysa Bunu Ayarlayabiliriz
 
 ```php
-$phpsql = new GamerboyTR\PhpSql("host", "kullanici_adi", "sifre");
+$phpsql = new GamerboyTR\phpSQL("host", "kullanici_adi", "sifre");
 // Veya
 $phpsql->setMysqli("host", "kullanici_adi", "sifre");
 ```
@@ -71,9 +71,9 @@ $dize = $phpsql->getMysqliDetails(); // Bir Array Döndürür
 Kolay Bir Şekilde MySql Sınıfını Alalım
 
 ```php
-// phpsql ile
+// phpSQL ile
 $mysqli = $phpsql->connect();
-// phpsql olmadan
+// phpSQL olmadan
 try {
     @$mysqli = new mysqli("host", "kullanici_adi", "şifre", "veritabanı");
     if($mysqli->connect_errno)
@@ -118,7 +118,7 @@ Dikkat Kaydedilen Ayarı Yükleyeceğiniz Zaman $phpsql Değişkenini Altına Ay
 
 ```php
 // Örnek
-$phpsql = new GamerboyTR\PhpSql();
+$phpsql = new GamerboyTR\phpSQL();
 $phpsql->restoreMysqliConfig();
 ```
 
