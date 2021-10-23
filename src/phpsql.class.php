@@ -18,7 +18,7 @@ use mysqli;
  * @package  gamerboytr/phpsql
  * @author   GamerboyTR <offical.gamerboytr@yandex.com>
  * @license  MIT https://opensource.org/licenses/MIT
- * @version  Release 1.2
+ * @version  Release 1.3
  * @link     http://github.com/gamerboytr/phpSQL
  */
 class phpSQL
