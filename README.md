@@ -1,4 +1,4 @@
-# PhpSQL
+# phpSQL
 
 [![Latest Stable Version](http://poser.pugx.org/gamerboytr/phpsql/v)](https://packagist.org/packages/gamerboytr/phpsql) [![Total Downloads](http://poser.pugx.org/gamerboytr/phpsql/downloads)](https://packagist.org/packages/gamerboytr/phpsql) [![License](http://poser.pugx.org/gamerboytr/phpsql/license)](https://packagist.org/packages/gamerboytr/phpsql) [![PHP Version Require](http://poser.pugx.org/gamerboytr/phpsql/require/php)](https://packagist.org/packages/gamerboytr/phpsql)
 
