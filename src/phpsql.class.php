@@ -1,6 +1,6 @@
 <?php
 
-/**!
+/**
  * Coder By GamerboyTR (https://github.com/gamerboytr)
  * A Php Library For MySql
  * Version 1.2
@@ -11,7 +11,17 @@ namespace GamerboyTR;
 
 use mysqli;
 
-class PhpSql
+/**
+ * phpSQL Library
+ * 
+ * @category MySQL
+ * @package  gamerboytr/phpsql
+ * @author   GamerboyTR <offical.gamerboytr@yandex.com>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @version  Release 1.2
+ * @link     http://github.com/gamerboytr/phpSQL
+ */
+class phpSQL
 {
     protected $database = null;
     protected $databaseUser = "root";
@@ -29,15 +39,14 @@ class PhpSql
     }
     /**
      * Save Your Mysqli Configuration
+     * 
      * @param array $options Save Options
+     * 
      * @return array
      */
     public function saveMysqliConfig($options = [])
     {
-        $options = array_merge([
-            "fileSavePath" => "./",
-            "overwriteFile" => true
-        ], $options);
+        $options = array_merge(["fileSavePath" => "./", "overwriteFile" => true], $options);
         $filePath = $options['fileSavePath'] . "phpsql.config.json";
         if (file_exists($filePath) && !$options['overwriteFile']) {
             return [
@@ -59,7 +68,9 @@ class PhpSql
     }
     /**
      * Restore Your Mysqli Configuration
+     * 
      * @param string $path Configuration File Path
+     * 
      * @return array
      */
     public function restoreMysqliConfig($path)
@@ -94,6 +105,7 @@ class PhpSql
     }
     /**
      * Connect Mysqli
+     * 
      * @return object Mysql Variable
      */
     public function connect()
@@ -108,6 +120,7 @@ class PhpSql
     }
     /**
      * Get Mysqli Status
+     * 
      * @return array Status
      */
     public function getStatus()
@@ -134,9 +147,11 @@ class PhpSql
     }
     /**
      * Set Mysqli Config
-     * @param string $host Mysqli Host
+     * 
+     * @param string $host     Mysqli Host
      * @param string $username Mysqli Username
      * @param string $password Mysqli Password
+     * 
      * @return array Mysqli Status
      */
     public function setMysqli($host, $username, $password)
@@ -150,6 +165,7 @@ class PhpSql
     }
     /**
      * Returning Mysqli Details
+     * 
      * @return array Details
      */
     public function getMysqliDetails()
@@ -164,7 +180,9 @@ class PhpSql
     }
     /**
      * Set Mysqli Database
+     * 
      * @param string $database Database Name
+     * 
      * @return boolean Connected
      */
     public function setDatabase($database)
@@ -178,9 +196,10 @@ class PhpSql
     }
     /**
      * Return Mysqli Query
-     * @param string $query Mysqli Query
+     * 
+     * @param string  $query Mysqli Query
      * @param boolean $fetch Fetch Query
-     * @param boolean $showErrors Show Query Errors
+     * 
      * @return mixed Data From Table
      */
     public function query($query, $fetch = true)
@@ -198,8 +217,10 @@ class PhpSql
     }
     /**
      * Create Table For Database
-     * @param string $name Table Name
-     * @param array $props Table Props
+     * 
+     * @param string $name  Table Name
+     * @param array  $props Table Props
+     * 
      * @return array
      */
     public function createTable($name, $props)
@@ -233,10 +254,12 @@ class PhpSql
     }
     /**
      * Select Row From Table
+     * 
      * @param string $column Select Column (* = Select All)
-     * @param string $extra Extra Selector (e.g. WHERE, ORDER BY)
-     * @param string $table Selecting Data Table
-     * @param string $fetch Fetch Query
+     * @param string $table  Selecting Data Table
+     * @param string $extra  Extra Selector (e.g. WHERE, ORDER BY)
+     * @param string $fetch  Fetch Query
+     * 
      * @return mixed
      */
     public function select($column, $table, $extra = null, $fetch = true)
@@ -249,8 +272,10 @@ class PhpSql
     }
     /**
      * Delete Row From Table
+     * 
      * @param string $table Name Of The Table
      * @param string $where Where Condition
+     * 
      * @return array
      */
     public function delete($table, $where)
