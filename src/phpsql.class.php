@@ -3,7 +3,7 @@
 /**
  * Coder By GamerboyTR (https://github.com/gamerboytr)
  * A Php Library For MySql
- * Version 1.2
+ * Version 1.3
  * License Under MIT
  */
 
@@ -130,7 +130,6 @@ class phpSQL
             if ($mysqli->connect_errno) {
                 return [
                     "success" => 0,
-                    "errorType" => "Mysqli Error",
                     "errorCode" => $mysqli->connect_errno,
                     "error" => $mysqli->connect_error,
                 ];
@@ -140,7 +139,6 @@ class phpSQL
         } catch (\Throwable $th) {
             return [
                 "success" => 0,
-                "errorType" => "Mysqli Error",
                 "error" => $th,
             ];
         }
@@ -183,7 +181,7 @@ class phpSQL
      * 
      * @param string $database Database Name
      * 
-     * @return boolean Connected
+     * @return boolean
      */
     public function setDatabase($database)
     {
@@ -253,6 +251,25 @@ class phpSQL
         ];
     }
     /**
+     * Create Database
+     *
+     * @param string $name
+     * 
+     * @return array
+     */
+    public function createDatabase($name)
+    {
+        $mysqli = $this->connect();
+        $tryingCode = "CREATE DATABASE $name";
+        $query = $mysqli->query($tryingCode);
+        if ($query && !$mysqli->errno) return ["success" => true];
+        return [
+            "success" => false,
+            "errorCode" => $mysqli->errno,
+            "error" => $mysqli->error,
+        ];
+    }
+    /**
      * Select Row From Table
      * 
      * @param string $column Select Column (* = Select All)
@@ -295,6 +312,119 @@ class phpSQL
             "errorCode" => $mysqli->errno,
             "error" => $mysqli->error,
             "tryingCode" => $tryingCode,
+        ];
+    }
+    /**
+     * Adding Data to an Existing Table
+     *
+     * @param string $table Table Name
+     * @param array  $props Data
+     * 
+     * @return array
+     */
+    public function insert($table, $props)
+    {
+        if (!$this->database) return [
+            "success" => false,
+            "error" => "Please Select Database First !",
+        ];
+        if (!is_array($props)) die("Props Must Be Array");
+        $str = "INSERT INTO `$table` (";
+        foreach ($props as $key => $val) $str .= "$key, ";
+        $str = trim(mb_substr(preg_replace("/\s\s/", " ", trim($str)), 0, -1));
+        $str .= ") VALUES (";
+        foreach ($props as $key => $val) {
+            if (gettype($val) !== "boolean") $str .= "'$val', ";
+            else $str .= "$val, ";
+        }
+        $str = trim(mb_substr(preg_replace("/\s\s/", " ", trim($str)), 0, -1));
+        $str .= ")";
+        $mysqli = $this->connect();
+        @$query = $mysqli->query($str);
+        if ($query && !$mysqli->errno) return ['success' => true];
+        return [
+            "success" => false,
+            "errorCode" => $mysqli->errno,
+            "error" => $mysqli->error,
+            "tryingCode" => $str
+        ];
+    }
+    /**
+     * Update Data From Existing Table
+     *
+     * @param string $table Table Name
+     * @param array  $props Data
+     * @param string $where Where Condition
+     * 
+     * @return array
+     */
+    public function update($table, $props, $where)
+    {
+        if (!$this->database) return [
+            "success" => false,
+            "error" => "Please Select Database First !",
+        ];
+        if (!is_array($props)) die("Props Must Be Array");
+        $str = "UPDATE $table SET ";
+        foreach ($props as $key => $val) $str .= "$key='$val', ";
+        $str = trim(mb_substr(preg_replace("/\s\s/", " ", trim($str)), 0, -1));
+        $str .= "WHERE $where";
+        $mysqli = $this->connect();
+        @$query = $mysqli->query($str);
+        if ($query && !$mysqli->errno) return ['success' => true];
+        return [
+            "success" => false,
+            "errorCode" => $mysqli->errno,
+            "error" => $mysqli->error,
+            "tryingCode" => $str
+        ];
+    }
+    /**
+     * Shows All Tables In The Database
+     *
+     * @param string $db Database (if empty it uses the database in the class)
+     * 
+     * @return array|void Tables
+     */
+    public function getTables($db = null)
+    {
+        $db = $db ? $db : $this->database;
+        $mysqli = $this->connect();
+        $mysqli->select_db($db);
+        $query = $mysqli->query("show TABLES");
+        if (!$mysqli->errno && $query) {
+            $arr = ["success" => true, "tables" => []];
+            foreach ($query->fetch_all() as $key => $val) {
+                array_push($arr['tables'], $val[0]);
+            }
+            return $arr;
+        };
+        return [
+            "success" => false,
+            "errorCode" => $mysqli->errno,
+            "error" => $mysqli->error
+        ];
+    }
+    /**
+     * Shows All Databases
+     * 
+     * @return array|void Databases
+     */
+    public function getDatabases()
+    {
+        $mysqli = $this->connect();
+        $query = $mysqli->query("show DATABASES");
+        if (!$mysqli->errno && $query) {
+            $arr = ["success" => true, "databases" => []];
+            foreach ($query->fetch_all() as $key => $val) {
+                array_push($arr['databases'], $val[0]);
+            }
+            return $arr;
+        };
+        return [
+            "success" => false,
+            "errorCode" => $mysqli->errno,
+            "error" => $mysqli->error
         ];
     }
 }

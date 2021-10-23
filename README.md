@@ -18,7 +18,7 @@ require __DIR__."/phpsql.class.php";
 require __DIR__."/vendor/autoload.php";
 ```
 
-Composer Kullanıyorsanız Bu Komutu Kullanmayı Unutmayın !
+**Composer** Kullanıyorsanız Bu Komutu **CMD'ye Yazmayı** Unutmayın !
 
 ```bat
 composer require gamerboytr/phpsql
@@ -85,7 +85,7 @@ try {
 
 ## Tablo İşlemleri
 
-### Oluşturma
+### Tablo Oluşturma
 
 Alabileceği Değerler
 
@@ -104,12 +104,54 @@ $phpsql->createTable("tablo_adi", [
 ]);
 ```
 
-## Silme
+### Tablodan Veri Silme
 
 ```php
 $phpsql->delete("tablo_adi", "seçici");
 // Örnek
 $phpsql->delete("kullanicilar", "adi='mehmet'");
+```
+
+### Tabloları Listeleme
+
+Eğerki Verdiğiniz Değer Boşsa Kütüphanede Tanımladığınız Veritabanını Kullanır
+
+```php
+print_r($phpsql->getTables("phpsql")); // Bir Array Döndürür
+```
+
+### Tabloya Veri Ekleme
+
+```php
+$phpsql->insert("tablo_adi", [
+    "veri_adi" => "veri_degeri"
+]);
+```
+
+### Tablodaki Veriyi Güncelleme
+
+```php
+$phpsql->update("tablo_adi", [
+    "veri_adi" => "guncellencek_veri_degeri"
+], "Nerede");
+// Örnek
+$phpsql->update("üyeler", [
+    "yetki" => "admin"
+], "kullanici_adi='gamerboytr'");
+```
+
+## Veritabanı İşlemleri
+
+### Veritabanı Oluşturma
+
+```php
+$phpsql->createDatabase("veritabani_adi");
+```
+
+### Veritabanlarını Listeleme
+
+```php
+$phpsql->getDatabases(); // Array Döndürür
 ```
 
 ## Kütüphane Ayalarını Kaydetme/Yükleme
@@ -140,7 +182,5 @@ $phpsql->saveMysqliConfig([
 ```php
 $phpsql->restoreMysqliConfig("klasor");
 ```
-
-### Yakında Daha Fazla Özellik Eklenicektir
 
 Author : GamerboyTR Mail : offical.gamerboytr@yandex.com Web : <https://www.gamerboytr.ml>
