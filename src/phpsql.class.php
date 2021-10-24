@@ -2,8 +2,8 @@
 
 /**
  * Coder By GamerboyTR (https://github.com/gamerboytr)
- * A Php Library For MySql
- * Version 1.3
+ * A Php Library For MySqli
+ * Version 1.3.4
  * License Under MIT
  */
 
@@ -14,11 +14,11 @@ use mysqli;
 /**
  * phpSQL Library
  * 
- * @category MySQL
+ * @category MySQLi
  * @package  gamerboytr/phpsql
  * @author   GamerboyTR <offical.gamerboytr@yandex.com>
  * @license  MIT https://opensource.org/licenses/MIT
- * @version  Release 1.3
+ * @version  Release 1.3.4
  * @link     http://github.com/gamerboytr/phpSQL
  */
 class phpSQL
@@ -28,23 +28,32 @@ class phpSQL
     protected $databasePassword = "";
     protected $databaseHost = "localhost";
 
+    /**
+     * Set Class MySQLi Config
+     * 
+     * @param string $host     MySQLi Host
+     * @param string $username MySQLi Username
+     * @param string $password MySQLi Password
+     * 
+     * @return array MySQLi Status
+     */
     function __construct($host = null, $username = null, $password = null)
     {
         $this->databaseHost = $host ? $host : $this->databaseHost;
         $this->databaseUser = $username ? $username : $this->databaseUser;
         $this->databasePassword = $password ? $password : $this->databasePassword;
-        if (!$this->getStatus()['success']) {
-            die("<br>Mysqli Error : " . $this->getStatus()['error']);
+        if (!$this->get_status()['success']) {
+            die("<br>MySQLi Error : " . $this->get_status()['error']);
         };
     }
     /**
-     * Save Your Mysqli Configuration
+     * Save Your Class Configuration
      * 
      * @param array $options Save Options
      * 
      * @return array
      */
-    public function saveMysqliConfig($options = [])
+    public function save_config($options = [])
     {
         $options = array_merge(["fileSavePath" => "./", "overwriteFile" => true], $options);
         $filePath = $options['fileSavePath'] . "phpsql.config.json";
@@ -67,13 +76,13 @@ class phpSQL
         if (fwrite($file, $json)) return ["success" => true];
     }
     /**
-     * Restore Your Mysqli Configuration
+     * Restore Your Class Configuration
      * 
      * @param string $path Configuration File Path
      * 
      * @return array
      */
-    public function restoreMysqliConfig($path)
+    public function restore_config($path)
     {
         $filePath = $path . "phpsql.config.json";
         if (!file_exists($filePath)) {
@@ -95,7 +104,7 @@ class phpSQL
             $this->databaseUser = $file->database->user;
             $this->databasePassword = $file->database->password;
             $this->database = $file->database->current;
-            if ($this->getStatus()['success']) return ["success" => true];
+            if ($this->get_status()['success']) return ["success" => true];
         } catch (\Throwable $th) {
             return [
                 "success" => false,
@@ -104,26 +113,26 @@ class phpSQL
         }
     }
     /**
-     * Connect Mysqli
+     * Connect MySQLi
      * 
-     * @return object Mysql Variable
+     * @return object MySQLi Variable
      */
     public function connect()
     {
         try {
             @$mysqli = new mysqli($this->databaseHost, $this->databaseUser, $this->databasePassword, $this->database);
-            if ($mysqli->connect_errno) die("<br>Mysqli Connect Error : " . $mysqli->connect_error);
+            if ($mysqli->connect_errno) die("<br>MySQLi Connect Error : " . $mysqli->connect_error);
             return $mysqli;
         } catch (\Throwable $th) {
-            die("<br>Mysqli Connect Error : $th");
+            die("<br>MySQLi Connect Error : $th");
         }
     }
     /**
-     * Get Mysqli Status
+     * Get Class Connection Status
      * 
      * @return array Status
      */
-    public function getStatus()
+    public function get_status()
     {
         try {
             @$mysqli = $this->connect();
@@ -144,58 +153,58 @@ class phpSQL
         }
     }
     /**
-     * Set Mysqli Config
+     * Set Class MySQLi Config
      * 
-     * @param string $host     Mysqli Host
-     * @param string $username Mysqli Username
-     * @param string $password Mysqli Password
+     * @param string $host     MySQLi Host
+     * @param string $username MySQLi Username
+     * @param string $password MySQLi Password
      * 
-     * @return array Mysqli Status
+     * @return array MySQLi Status
      */
-    public function setMysqli($host, $username, $password)
+    public function set_config($host, $username, $password)
     {
         $this->databaseHost = $host ? $host : $this->databaseHost;
         $this->databaseUser = $username ? $username : $this->databaseUser;
         $this->databasePassword = $password ? $password : $this->databasePassword;
-        if (!$this->getStatus()['success']) {
-            die("<br>Mysqli Error : " . $this->getStatus()['error']);
+        if (!$this->get_status()['success']) {
+            die("<br>MySQLi Error : " . $this->get_status()['error']);
         };
     }
     /**
-     * Returning Mysqli Details
+     * Returning Class MySQLi Config (e.g. database,user)
      * 
-     * @return array Details
+     * @return array Config
      */
-    public function getMysqliDetails()
+    public function get_config()
     {
         return [
             "database" => $this->database,
             "user" => $this->databaseUser,
             "password" => $this->databasePassword,
             "host" => $this->databaseHost,
-            "active" => $this->getStatus()['success'],
+            "active" => $this->get_status()['success'],
         ];
     }
     /**
-     * Set Mysqli Database
+     * Set Class Database
      * 
      * @param string $database Database Name
      * 
      * @return boolean
      */
-    public function setDatabase($database)
+    public function select_db($database)
     {
         $this->database = $database;
-        if ($this->getStatus()['success']) {
+        if ($this->get_status()['success']) {
             return true;
         } else {
-            return $this->getStatus();
+            return $this->get_status();
         }
     }
     /**
-     * Return Mysqli Query
+     * MySQLi Query
      * 
-     * @param string  $query Mysqli Query
+     * @param string  $query MySQLi Query
      * @param boolean $fetch Fetch Query
      * 
      * @return mixed Data From Table
@@ -206,22 +215,22 @@ class phpSQL
         try {
             @$mysqli = $this->connect();
             $myQuery = $mysqli->query($query);
-            if (!$myQuery) die("<br>A Mysqli Query Error Occurred : " . $mysqli->error);
+            if (!$myQuery) die("<br>A MySQLi Query Error Occurred : " . $mysqli->error);
             if ($fetch) return $myQuery->fetch_assoc();
             else return $myQuery;
         } catch (\Throwable $th) {
-            die("<br>Mysqli Error : $th");
+            die("<br>MySQLi Error : $th");
         }
     }
     /**
-     * Create Table For Database
+     * Create Table
      * 
      * @param string $name  Table Name
      * @param array  $props Table Props
      * 
      * @return array
      */
-    public function createTable($name, $props)
+    public function create_table($name, $props)
     {
         if (!is_array($props)) die("<br>Props Must Be Array In Array");
         $str = "CREATE TABLE $name (";
@@ -257,7 +266,7 @@ class phpSQL
      * 
      * @return array
      */
-    public function createDatabase($name)
+    public function create_db($name)
     {
         $mysqli = $this->connect();
         $tryingCode = "CREATE DATABASE $name";
@@ -386,7 +395,7 @@ class phpSQL
      * 
      * @return array|void Tables
      */
-    public function getTables($db = null)
+    public function get_tables($db = null)
     {
         $db = $db ? $db : $this->database;
         $mysqli = $this->connect();
@@ -410,7 +419,7 @@ class phpSQL
      * 
      * @return array|void Databases
      */
-    public function getDatabases()
+    public function get_dbs()
     {
         $mysqli = $this->connect();
         $query = $mysqli->query("show DATABASES");
@@ -425,6 +434,30 @@ class phpSQL
             "success" => false,
             "errorCode" => $mysqli->errno,
             "error" => $mysqli->error
+        ];
+    }
+    /**
+     * Remove Table|Database
+     *
+     * @param string $name Table Or Database Name
+     * @param string $droptype Table Or Database
+     * @return array
+     */
+    public function drop($name, $droptype)
+    {
+        $mysqli = $this->connect();
+        $tryingCode = "DROP ";
+        $tryingCode .= strtolower($droptype) === "table" ? "TABLE $name" : (strtolower($droptype) === "database" ? "DATABASE $name" : null);
+        if (trim($tryingCode) === "DROP") return [
+            "success" => false,
+            "error" => "$droptype Is Not Valid Type, droptype Must Be Table Or Database",
+        ];
+        @$query = $mysqli->query($tryingCode);
+        if ($query && !$mysqli->errno) return ["success" => true];
+        return [
+            "success" => false,
+            "errorCode" => $mysqli->errno,
+            "error" => $mysqli->error,
         ];
     }
 }
