@@ -439,8 +439,9 @@ class phpSQL
     /**
      * Remove Table|Database
      *
-     * @param string $name Table Or Database Name
+     * @param string $name     Table Or Database Name
      * @param string $droptype Table Or Database
+     * 
      * @return array
      */
     public function drop($name, $droptype)
