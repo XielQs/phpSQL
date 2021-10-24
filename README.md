@@ -5,16 +5,16 @@
 MySql İçin Bir Php Kütüphanesi
 
 Herhangi Bir Sorun Olursa [Buradan](mailto:offical.gamerboytr@yandex.com) Ulaşabilirsiniz
-Ayrıca Dosyada `Php Doc` Kullanılmaktadır, Modern Editörlerde İşinize Yarayabilir (Sıkıştırılmış Dosya İçin Geçerli **Değildir**!)
+Ayrıca Dosyada `Php Documentor` Kullanılmaktadır, Modern Editörlerde İşinize Yarayabilir (Sıkıştırılmış Dosya İçin Geçerli **Değildir**!)
 
 ## Kurulum
 
 İlk Önce Dosyamızı Dahil Edelim
 
 ```php
-// Dosya
+// Dosya İle
 require __DIR__."/phpsql.class.php";
-// Composer
+// Composer İle
 require __DIR__."/vendor/autoload.php";
 ```
 
@@ -35,7 +35,7 @@ Eğerki MySQL Ayarlarınız(kullanıcı adı, şifre vs.) Farklıysa Bunu Ayarla
 ```php
 $phpsql = new GamerboyTR\phpSQL("host", "kullanici_adi", "sifre");
 // Veya
-$phpsql->setMysqli("host", "kullanici_adi", "sifre");
+$phpsql->set_config("host", "kullanici_adi", "sifre");
 ```
 
 ## Komutlar
@@ -43,7 +43,7 @@ $phpsql->setMysqli("host", "kullanici_adi", "sifre");
 Hadi Bir Veritabanına Bağlanalım !
 
 ```php
-$phpsql->setDatabase("veritabani_adi");
+$phpsql->set_db("veritabani_adi");
 ```
 
 Veritabanından Veri Çekelim
@@ -65,7 +65,7 @@ $veri = $phpsql->query("SELECT * FROM üyeler");
 Sınıfın Kaydettiği MySql Bilgilerini Alalım
 
 ```php
-$dize = $phpsql->getMysqliDetails(); // Bir Array Döndürür
+$dize = $phpsql->get_config(); // Bir Array Döndürür
 ```
 
 Kolay Bir Şekilde MySql Sınıfını Alalım
@@ -96,7 +96,7 @@ Alabileceği Değerler
 - comment - Açıklama / string|null
 
 ```php
-$phpsql->createTable("tablo_adi", [
+$phpsql->create_table("tablo_adi", [
     [
         "name" => "satir_adi",
         "type" => "varchar"
@@ -117,7 +117,7 @@ $phpsql->delete("kullanicilar", "adi='mehmet'");
 Eğerki Verdiğiniz Değer Boşsa Kütüphanede Tanımladığınız Veritabanını Kullanır
 
 ```php
-print_r($phpsql->getTables("phpsql")); // Bir Array Döndürür
+print_r($phpsql->get_tables("phpsql")); // Bir Array Döndürür
 ```
 
 ### Tabloya Veri Ekleme
@@ -145,13 +145,23 @@ $phpsql->update("üyeler", [
 ### Veritabanı Oluşturma
 
 ```php
-$phpsql->createDatabase("veritabani_adi");
+$phpsql->create_db("veritabani_adi");
 ```
 
 ### Veritabanlarını Listeleme
 
 ```php
-$phpsql->getDatabases(); // Array Döndürür
+$phpsql->get_dbs(); // Array Döndürür
+```
+
+### Veritabanı Silme
+
+```php
+$phpsql->drop("tablo_veya_veritabani_adi", "silinecek_tur");
+// Örnek Veritabanı Silme
+$phpsql->drop("phpsql", "database");
+// Örnek Tablo Silme
+$phpsql->drop("üyeler", "table");
 ```
 
 ## Kütüphane Ayalarını Kaydetme/Yükleme
@@ -161,18 +171,18 @@ Dikkat Kaydedilen Ayarı Yükleyeceğiniz Zaman $phpsql Değişkenini Altına Ay
 ```php
 // Örnek
 $phpsql = new GamerboyTR\phpSQL();
-$phpsql->restoreMysqliConfig();
+$phpsql->restore_config();
 ```
 
 ### Kaydetme
 
 Alabileceği Değerler
 
-- fileSavePath - Dosyayı Kaydedeceği Klasör / string
-- overwriteFile - Klasörde Zaten Kaydedilmiş Dosya Varya Üzerine Yazma / boolean
+- fileSavePath - Dosyayı Kaydedeceği Klasör (Boş Veya "./" İse O Dizine Kaydedilir) / string
+- overwriteFile - Klasörde Zaten Kaydedilmiş Bir Yapılandırma Ayarı Varsa Üzerine Yaz / boolean
 
 ```php
-$phpsql->saveMysqliConfig([
+$phpsql->save_config([
     // Değerler Buraya
 ]);
 ```
@@ -180,7 +190,7 @@ $phpsql->saveMysqliConfig([
 ### Yükleme
 
 ```php
-$phpsql->restoreMysqliConfig("klasor");
+$phpsql->restore_config("klasor");
 ```
 
 Author : GamerboyTR Mail : offical.gamerboytr@yandex.com Web : <https://www.gamerboytr.ml>
