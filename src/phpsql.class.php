@@ -23,10 +23,30 @@ use mysqli;
  */
 class phpSQL
 {
-    protected $database = null;
-    protected $databaseUser = "root";
-    protected $databasePassword = "";
-    protected $databaseHost = "localhost";
+    /**
+     * Database
+     *
+     * @var string
+     */
+    protected $_database = null;
+    /**
+     * MySQLi Username
+     *
+     * @var string
+     */
+    protected $_databaseUser = "root";
+    /**
+     * MySQLi Password
+     *
+     * @var string
+     */
+    protected $_databasePassword = "";
+    /**
+     * MySQLi Host
+     *
+     * @var string
+     */
+    protected $_databaseHost = "localhost";
 
     /**
      * Set Class MySQLi Config
@@ -39,9 +59,9 @@ class phpSQL
      */
     function __construct($host = null, $username = null, $password = null)
     {
-        $this->databaseHost = $host ? $host : $this->databaseHost;
-        $this->databaseUser = $username ? $username : $this->databaseUser;
-        $this->databasePassword = $password ? $password : $this->databasePassword;
+        $this->_databaseHost = $host ? $host : $this->_databaseHost;
+        $this->_databaseUser = $username ? $username : $this->_databaseUser;
+        $this->_databasePassword = $password ? $password : $this->_databasePassword;
         if (!$this->get_status()['success']) {
             die("<br>MySQLi Error : " . $this->get_status()['error']);
         };
@@ -66,10 +86,10 @@ class phpSQL
         $file = fopen($filePath, "w+") or die("Unable to open file!");
         $json = json_encode([
             "database" => [
-                "current" => $this->database,
-                "user" => $this->databaseUser,
-                "password" => $this->databasePassword,
-                "host" => $this->databaseHost
+                "current" => $this->_database,
+                "user" => $this->_databaseUser,
+                "password" => $this->_databasePassword,
+                "host" => $this->_databaseHost
             ],
             "date" => date("Y-m-d H:i:s"),
         ]);
@@ -100,10 +120,10 @@ class phpSQL
             ];
         }
         try {
-            $this->databaseHost = $file->database->host;
-            $this->databaseUser = $file->database->user;
-            $this->databasePassword = $file->database->password;
-            $this->database = $file->database->current;
+            $this->_databaseHost = $file->database->host;
+            $this->_databaseUser = $file->database->user;
+            $this->_databasePassword = $file->database->password;
+            $this->_database = $file->database->current;
             if ($this->get_status()['success']) return ["success" => true];
         } catch (\Throwable $th) {
             return [
@@ -120,7 +140,7 @@ class phpSQL
     public function connect()
     {
         try {
-            @$mysqli = new mysqli($this->databaseHost, $this->databaseUser, $this->databasePassword, $this->database);
+            @$mysqli = new mysqli($this->_databaseHost, $this->_databaseUser, $this->_databasePassword, $this->_database);
             if ($mysqli->connect_errno) die("<br>MySQLi Connect Error : " . $mysqli->connect_error);
             return $mysqli;
         } catch (\Throwable $th) {
@@ -163,9 +183,9 @@ class phpSQL
      */
     public function set_config($host, $username, $password)
     {
-        $this->databaseHost = $host ? $host : $this->databaseHost;
-        $this->databaseUser = $username ? $username : $this->databaseUser;
-        $this->databasePassword = $password ? $password : $this->databasePassword;
+        $this->_databaseHost = $host ? $host : $this->_databaseHost;
+        $this->_databaseUser = $username ? $username : $this->_databaseUser;
+        $this->_databasePassword = $password ? $password : $this->_databasePassword;
         if (!$this->get_status()['success']) {
             die("<br>MySQLi Error : " . $this->get_status()['error']);
         };
@@ -178,10 +198,10 @@ class phpSQL
     public function get_config()
     {
         return [
-            "database" => $this->database,
-            "user" => $this->databaseUser,
-            "password" => $this->databasePassword,
-            "host" => $this->databaseHost,
+            "database" => $this->_database,
+            "user" => $this->_databaseUser,
+            "password" => $this->_databasePassword,
+            "host" => $this->_databaseHost,
             "active" => $this->get_status()['success'],
         ];
     }
@@ -194,7 +214,7 @@ class phpSQL
      */
     public function select_db($database)
     {
-        $this->database = $database;
+        $this->_database = $database;
         if ($this->get_status()['success']) {
             return true;
         } else {
@@ -211,7 +231,7 @@ class phpSQL
      */
     public function query($query, $fetch = true)
     {
-        if (!$this->database) die("<br>Please Select a Database First !");
+        if (!$this->_database) die("<br>Please Select a Database First !");
         try {
             @$mysqli = $this->connect();
             $myQuery = $mysqli->query($query);
@@ -249,7 +269,7 @@ class phpSQL
         $str = trim(mb_substr(preg_replace("/\s\s/", " ", trim($str)), 0, -1));
         $str .= ")";
         $mysqli = $this->connect();
-        $mysqli->select_db($this->database);
+        $mysqli->select_db($this->_database);
         $query = $mysqli->query($str);
         if ($query) return ["success" => true];
         else return [
@@ -333,7 +353,7 @@ class phpSQL
      */
     public function insert($table, $props)
     {
-        if (!$this->database) return [
+        if (!$this->_database) return [
             "success" => false,
             "error" => "Please Select Database First !",
         ];
@@ -369,7 +389,7 @@ class phpSQL
      */
     public function update($table, $props, $where)
     {
-        if (!$this->database) return [
+        if (!$this->_database) return [
             "success" => false,
             "error" => "Please Select Database First !",
         ];
@@ -397,7 +417,7 @@ class phpSQL
      */
     public function get_tables($db = null)
     {
-        $db = $db ? $db : $this->database;
+        $db = $db ? $db : $this->_database;
         $mysqli = $this->connect();
         $mysqli->select_db($db);
         $query = $mysqli->query("show TABLES");
