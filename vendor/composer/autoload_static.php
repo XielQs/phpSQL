@@ -6,18 +6,8 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit28f99697c6e6baaf0ac752c329260751
 {
-    public static $prefixLengthsPsr4 = array (
-        'G' => 
-        array (
-            'GamerboyTR\\' => 11,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'GamerboyTR\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
-        ),
+    public static $files = array (
+        '73292c28e99fcaef297ffcc01b0568dc' => __DIR__ . '/../..' . '/src/phpsql.class.php',
     );
 
     public static $classMap = array (
@@ -27,8 +17,6 @@ class ComposerStaticInit28f99697c6e6baaf0ac752c329260751
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit28f99697c6e6baaf0ac752c329260751::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit28f99697c6e6baaf0ac752c329260751::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit28f99697c6e6baaf0ac752c329260751::$classMap;
 
         }, null, ClassLoader::class);

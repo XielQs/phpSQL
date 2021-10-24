@@ -15,27 +15,34 @@
 	"type": "library",
 	"license": "MIT",
 	"require": {
-		"php": ">=7.2",
-		"composer-runtime-api": "*"
-	},
-	"require-dev": {
-		"php": ">=7.2",
-		"composer-runtime-api": "*"
+		"php": ">=7.2"
 	},
 	"authors": [
 		{
 			"name": "GamerboyTR",
 			"email": "offical.gamerboytr@yandex.com",
-			"role": "Founder"
+			"role": "Founder",
+			"homepage": "https://gamerboytr.ml"
 		}
 	],
 	"support": {
 		"issues": "https://github.com/gamerboytr/phpSQL/issues",
-		"source": "https://github.com/gamerboytr/phpSQL/"
+		"source": "https://github.com/gamerboytr/phpSQL/",
+		"email": "offical.gamerboytr@yandex.com",
+		"docs": "https://github.com/gamerboytr/phpSQL/blob/master/README.md"
+	},
+	"funding": [
+		{
+			"type": "patreon",
+			"url": "https://www.patreon.com/gamerboytr"
+		}
+	],
+	"suggest": {
+		"php": "Needed to php >=7.2 in class phpSQL"
 	},
 	"autoload": {
-		"psr-4": {
-			"GamerboyTR\\": "src/"
-		}
+		"files": [
+			"src/phpsql.class.php"
+		]
 	}
 }
